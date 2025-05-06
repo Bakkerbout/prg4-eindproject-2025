@@ -25,7 +25,7 @@ export class Game extends Engine {
     }
 
     fishLeft(e) {
-        e.target.pos = new Vector(-100, 300)
+        e.target.pos = new Vector(1350, 300)
     }
 }
 
