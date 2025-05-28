@@ -4,9 +4,11 @@ import { Resources, ResourceLoader } from './resources.js'
 import { Background } from './background.js'
 import { Runner } from './runner.js'
 import { Platform } from './platform.js'
-// import { Hurdle } from './hurdle.js'
+import { Hurdle } from './hurdle.js'
 
 export class Game extends Engine {
+
+    runner;
 
     constructor() {
         super({
@@ -37,9 +39,21 @@ export class Game extends Engine {
 
         this.add(new Platform(600));
 
-        const runner = new Runner()
-        this.add(runner)
-        this.currentScene.camera.strategy.lockToActorAxis(runner, Axis.X)
+        // const runner = new Runner()
+        this.runner = new Runner()
+        this.add(this.runner)
+        this.currentScene.camera.strategy.lockToActorAxis(this.runner, Axis.X)
+
+        this.startHurdleSpawner();
+    }
+
+    startHurdleSpawner() {
+        setInterval(() => {
+            if (this.runner && !this.runner.isKilled()) {
+                const newHurdle = new Hurdle();
+                this.add(newHurdle)
+            }
+        }, 3000);
     }
 }
 
