@@ -4,6 +4,7 @@ import { ImageSource, Sound, Resource, Loader } from 'excalibur'
 const Resources = {
     Runner: new ImageSource('images/runner.png'),
     Hurdle: new ImageSource('images/hurdle.png'),
+    Heart: new ImageSource('images/heart.png'),
     Background: new ImageSource('images/background.png')
 }
 

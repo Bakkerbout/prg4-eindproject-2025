@@ -5,10 +5,14 @@ import { Background } from './background.js'
 import { Runner } from './runner.js'
 import { Platform } from './platform.js'
 import { Hurdle } from './hurdle.js'
+import { UI } from './ui.js'
+import { Lifeup } from './life-up.js'
 
 export class Game extends Engine {
 
     runner;
+    score = 0;
+    ui;
 
     constructor() {
         super({
@@ -37,23 +41,43 @@ export class Game extends Engine {
 
         this.add(background2)
 
+        this.lifeup = new Lifeup()
+        this.add(this.lifeup)
+
         this.add(new Platform(600));
 
-        // const runner = new Runner()
         this.runner = new Runner()
         this.add(this.runner)
         this.currentScene.camera.strategy.lockToActorAxis(this.runner, Axis.X)
 
         this.startHurdleSpawner();
+
+        this.startScoreCounter();
+
+        this.ui = new UI();
+        this.add(this.ui);
     }
 
     startHurdleSpawner() {
         setInterval(() => {
             if (this.runner && !this.runner.isKilled()) {
+                const cameraX = this.currentScene.camera.x;
+                const screenRight = cameraX + this.drawWidth / 2;
                 const newHurdle = new Hurdle();
-                this.add(newHurdle)
+                newHurdle.pos = new Vector(screenRight - 50, 580);
+                newHurdle.vel = new Vector(-400, 0);
+                this.add(newHurdle);
             }
         }, 3000);
+    }
+
+    startScoreCounter() {
+        setInterval(() => {
+            if (this.runner && !this.runner.isKilled()) {
+                this.score += 1;
+                this.ui.updateScore(this.score);
+            }
+        }, 1000);
     }
 }
 

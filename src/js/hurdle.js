@@ -5,28 +5,51 @@ import { Runner } from "./runner"
 export class Hurdle extends Actor {
 
     constructor() {
-
-        super({ width: 100, height: 100 })
+        super({
+            width: Resources.Hurdle.width / 4, height: Resources.Hurdle.height - 100, anchor: new Vector(0.5, 0.5)
+        })
     }
 
     onInitialize(engine) {
-        // const sprite = Resources.Hurdle.toSprite();
         this.graphics.use(Resources.Hurdle.toSprite());
         this.body.collisionType = CollisionType.Active;
-        // const hurdle = new Hurdle();
-        this.pos = new Vector(1300, 580);
-        this.vel = new Vector(-400, 0);
-
         this.scale = new Vector(0.5, 0.5);
-        // engine.add(hurdle);
-
         this.on('collisionstart', (event) => this.hitSomething(event));
-
     }
 
     hitSomething(event) {
         if (event.other.owner instanceof Runner) {
-            console.log('hit enemy')
+            const runner = event.other.owner;
+            if (runner.lives > 1) {
+                runner.lives -= 1;
+                runner.scene?.engine.ui.updateLives(runner.lives);
+
+                let flashes = 6;
+                let flashInterval = setInterval(() => {
+                    runner.graphics.opacity = runner.graphics.opacity === 1 ? 0.2 : 1;
+                    flashes--;
+                    if (flashes <= 0) {
+                        clearInterval(flashInterval);
+                        runner.graphics.opacity = 1;
+                    }
+                }, 100);
+
+                this.kill();
+                runner.vel = new Vector(100, runner.vel.y);
+
+            } else {
+                runner.lives = 0;
+                runner.scene?.engine.ui.updateLives(runner.lives);
+                runner.kill();
+            }
+
+            // Min 1 leven wanneer tegen hurdle aan loopt
+            // if de levens op zijn en runner loopt tegen hurdle ga dood
+            // Een animatie wanneer runner tegen hurdle loopt
+
+            // Leven oppakken (na 3 hurdles ofzo?) (maximaal 5 levens)
+            // Niet double jumpen
+            // Levens afbeelding bovenaan zetten (tekst voor nu)
         }
     }
 }
