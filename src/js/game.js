@@ -10,8 +10,8 @@ import { Lifeup } from './life-up.js'
 
 export class Game extends Engine {
 
-    runner;
-    score = 0;
+    #runner;
+    #score = 0;
     ui;
 
     constructor() {
@@ -43,9 +43,9 @@ export class Game extends Engine {
 
         this.add(new Platform(600));
 
-        this.runner = new Runner()
-        this.add(this.runner)
-        this.currentScene.camera.strategy.lockToActorAxis(this.runner, Axis.X)
+        this.#runner = new Runner()
+        this.add(this.#runner)
+        this.currentScene.camera.strategy.lockToActorAxis(this.#runner, Axis.X)
 
         this.startHurdleSpawner();
 
@@ -57,7 +57,7 @@ export class Game extends Engine {
 
     startHurdleSpawner() {
         setInterval(() => {
-            if (this.runner && !this.runner.isKilled()) {
+            if (this.#runner && !this.#runner.isKilled()) {
                 const cameraX = this.currentScene.camera.x;
                 const screenRight = cameraX + this.drawWidth / 2;
                 const newHurdle = new Hurdle();
@@ -77,9 +77,9 @@ export class Game extends Engine {
 
     startScoreCounter() {
         setInterval(() => {
-            if (this.runner && !this.runner.isKilled()) {
-                this.score += 1;
-                this.ui.updateScore(this.score);
+            if (this.#runner && !this.#runner.isKilled()) {
+                this.#score += 1;
+                this.ui.updateScore(this.#score);
             }
         }, 1000);
     }

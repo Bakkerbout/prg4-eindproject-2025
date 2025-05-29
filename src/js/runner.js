@@ -6,14 +6,13 @@ import { Platform } from "./platform";
 
 export class Runner extends Actor {
 
-    score = 0;
+    #score = 0;
     lives = 3;
 
 
     constructor() {
         super({ width: Resources.Runner.width / 2, height: Resources.Runner.height - 10 })
 
-        this.isOnGround = true;
         const sprite = Resources.Runner.toSprite()
         this.graphics.use(sprite)
         this.z = 1
@@ -37,8 +36,8 @@ export class Runner extends Actor {
 
     hitSomething(event) {
         if (event.other.owner instanceof Hurdle) {
-            this.score++;
-            this.scene?.engine.ui.updateScore(this.score);
+            this.#score++;
+            this.scene?.engine.ui.updateScore(this.#score);
         }
     }
 

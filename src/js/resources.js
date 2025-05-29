@@ -1,6 +1,5 @@
 import { ImageSource, Sound, Resource, Loader } from 'excalibur'
 
-// voeg hier jouw eigen resources toe
 const Resources = {
     Runner: new ImageSource('images/runner.png'),
     Hurdle: new ImageSource('images/hurdle.png'),
