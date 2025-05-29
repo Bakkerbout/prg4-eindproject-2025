@@ -41,9 +41,6 @@ export class Game extends Engine {
 
         this.add(background2)
 
-        this.lifeup = new Lifeup()
-        this.add(this.lifeup)
-
         this.add(new Platform(600));
 
         this.runner = new Runner()
@@ -67,8 +64,15 @@ export class Game extends Engine {
                 newHurdle.pos = new Vector(screenRight - 50, 580);
                 newHurdle.vel = new Vector(-400, 0);
                 this.add(newHurdle);
+
+                if (Math.random() < 0.3) {
+                    const heart = new Lifeup();
+                    heart.pos = new Vector(0, -newHurdle.height / 2 - heart.height / 2 - 4);
+                    newHurdle.addChild(heart);
+                }
             }
         }, 3000);
+
     }
 
     startScoreCounter() {

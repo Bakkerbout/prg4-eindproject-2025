@@ -46,9 +46,10 @@ export class Hurdle extends Actor {
             // Min 1 leven wanneer tegen hurdle aan loopt
             // if de levens op zijn en runner loopt tegen hurdle ga dood
             // Een animatie wanneer runner tegen hurdle loopt
+            // Levens oppakken, op random momenten verschijnen
 
-            // Leven oppakken (na 3 hurdles ofzo?) (maximaal 5 levens)
             // Niet double jumpen
+            // Maximaal 5 levens?
             // Levens afbeelding bovenaan zetten (tekst voor nu)
         }
     }
