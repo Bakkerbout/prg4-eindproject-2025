@@ -11,6 +11,7 @@ export class Platform extends Actor {
     }
 
     onInitialize(engine) {
+        this.body.useGravity = false;
         this.body.collisionType = CollisionType.Fixed;
     }
 

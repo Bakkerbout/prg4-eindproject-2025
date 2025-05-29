@@ -42,15 +42,6 @@ export class Hurdle extends Actor {
                 runner.scene?.engine.ui.updateLives(runner.lives);
                 runner.kill();
             }
-
-            // Min 1 leven wanneer tegen hurdle aan loopt
-            // if de levens op zijn en runner loopt tegen hurdle ga dood
-            // Een animatie wanneer runner tegen hurdle loopt
-            // Levens oppakken, op random momenten verschijnen
-
-            // Niet double jumpen
-            // Maximaal 5 levens?
-            // Levens afbeelding bovenaan zetten (tekst voor nu)
         }
     }
 }
