@@ -7,12 +7,15 @@ import { Platform } from './platform.js'
 import { Hurdle } from './hurdle.js'
 import { UI } from './ui.js'
 import { Lifeup } from './life-up.js'
+import { Bal } from './bal.js'
 
 export class Game extends Engine {
 
     #runner;
     #score = 0;
     ui;
+    lastSpawnWasHurdle = false;
+
 
     constructor() {
         super({
@@ -47,7 +50,7 @@ export class Game extends Engine {
         this.add(this.#runner)
         this.currentScene.camera.strategy.lockToActorAxis(this.#runner, Axis.X)
 
-        this.startHurdleSpawner();
+        this.startSpawner();
 
         this.startScoreCounter();
 
@@ -55,24 +58,33 @@ export class Game extends Engine {
         this.add(this.ui);
     }
 
-    startHurdleSpawner() {
+    startSpawner() {
         setInterval(() => {
             if (this.#runner && !this.#runner.isKilled()) {
                 const cameraX = this.currentScene.camera.x;
                 const screenRight = cameraX + this.drawWidth / 2;
-                const newHurdle = new Hurdle();
-                newHurdle.pos = new Vector(screenRight - 50, 580);
-                newHurdle.vel = new Vector(-400, 0);
-                this.add(newHurdle);
 
-                if (Math.random() < 0.3) {
-                    const heart = new Lifeup();
-                    heart.pos = new Vector(0, -newHurdle.height / 2 - heart.height / 2 - 4);
-                    newHurdle.addChild(heart);
+                const spawnType = Math.random() < 0.5 ? "hurdle" : "bal";
+
+                if (spawnType === "bal") {
+                    const newBal = new Bal();
+                    newBal.pos = new Vector(screenRight - 50, 350);
+                    newBal.vel = new Vector(-400, 0);
+                    this.add(newBal);
+                } else {
+                    const newHurdle = new Hurdle();
+                    newHurdle.pos = new Vector(screenRight - 50, 580);
+                    newHurdle.vel = new Vector(-400, 0);
+                    this.add(newHurdle);
+
+                    if (Math.random() < 0.3) {
+                        const heart = new Lifeup();
+                        heart.pos = new Vector(0, -newHurdle.height / 2 - heart.height / 2 - 4);
+                        newHurdle.addChild(heart);
+                    }
                 }
             }
         }, 3000);
-
     }
 
     startScoreCounter() {

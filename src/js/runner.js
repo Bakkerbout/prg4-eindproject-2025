@@ -3,7 +3,6 @@ import { Resources } from "./resources"
 import { Hurdle } from "./hurdle"
 import { Platform } from "./platform";
 
-
 export class Runner extends Actor {
 
     #score = 0;
@@ -28,9 +27,15 @@ export class Runner extends Actor {
     }
 
     onPreUpdate(engine, delta) {
-        if (engine.input.keyboard.wasPressed(Keys.Space) && this.isOnGround) {
+        if (engine.input.keyboard.wasPressed(Keys.W) && this.isOnGround) {
             this.body.applyLinearImpulse(new Vector(0, -350 * delta));
             this.isOnGround = false;
+        }
+
+        if (engine.input.keyboard.isHeld(Keys.S)) {
+            this.scale = new Vector(1.2, 0.6);
+        } else {
+            this.scale = new Vector(1.2, 1.2);
         }
     }
 
