@@ -24,7 +24,6 @@ export class Background extends Actor {
     onPreUpdate(engine, delta) {
         const runner = engine.getRunner && engine.getRunner();
         if (runner && !runner.isKilled && !runner.isKilled()) {
-            // Gebruik altijd engine.speed, NIET een eigen this.speed!
             this.pos.x -= engine.speed * (delta / 1000);
         }
     }

@@ -28,7 +28,7 @@ export class Bal extends Actor {
                 runner.lives -= 1;
                 runner.scene?.engine.ui.updateLives(runner.lives);
 
-                let flashes = 6;
+                let flashes = 3;
                 let flashInterval = setInterval(() => {
                     runner.graphics.opacity = runner.graphics.opacity === 1 ? 0.2 : 1;
                     flashes--;
