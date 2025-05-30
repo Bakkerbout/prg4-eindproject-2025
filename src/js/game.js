@@ -14,7 +14,8 @@ export class Game extends Engine {
     #runner;
     #score = 0;
     ui;
-    lastSpawnWasHurdle = false;
+    speed = 200;
+    speedIncrease = 100;
 
 
     constructor() {
@@ -59,7 +60,7 @@ export class Game extends Engine {
     }
 
     startSpawner() {
-        setInterval(() => {
+        const spawn = () => {
             if (this.#runner && !this.#runner.isKilled()) {
                 const cameraX = this.currentScene.camera.x;
                 const screenRight = cameraX + this.drawWidth / 2;
@@ -68,13 +69,15 @@ export class Game extends Engine {
 
                 if (spawnType === "bal") {
                     const newBal = new Bal();
-                    newBal.pos = new Vector(screenRight - 50, 350);
-                    newBal.vel = new Vector(-400, 0);
+                    newBal.pos = new Vector(screenRight - 50, 200 + Math.random() * 150);
+                    const scale = 0.2 + Math.random() * 0.4;
+                    newBal.scale = new Vector(scale, scale);
+                    newBal.vel = new Vector(-this.speed, 0);
                     this.add(newBal);
                 } else {
                     const newHurdle = new Hurdle();
                     newHurdle.pos = new Vector(screenRight - 50, 580);
-                    newHurdle.vel = new Vector(-400, 0);
+                    newHurdle.vel = new Vector(-this.speed, 0);
                     this.add(newHurdle);
 
                     if (Math.random() < 0.3) {
@@ -84,7 +87,9 @@ export class Game extends Engine {
                     }
                 }
             }
-        }, 3000);
+            setTimeout(spawn, 2000 + Math.random() * 3000);
+        };
+        spawn();
     }
 
     startScoreCounter() {
@@ -92,8 +97,16 @@ export class Game extends Engine {
             if (this.#runner && !this.#runner.isKilled()) {
                 this.#score += 1;
                 this.ui.updateScore(this.#score);
+
+                if (this.#score % 10 === 0) {
+                    this.speed += this.speedIncrease;
+                }
             }
         }, 1000);
+    }
+
+    getRunner() {
+        return this.#runner;
     }
 }
 

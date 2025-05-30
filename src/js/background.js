@@ -4,7 +4,6 @@ import { Resources } from "./resources.js";
 export class Background extends Actor {
     constructor() {
         super();
-        this.speed = 125;
     }
     onInitialize(engine) {
         this.anchor = Vector.Half;
@@ -21,5 +20,12 @@ export class Background extends Actor {
             const minX = this.pos.x - engine.drawWidth / 2 + 100;
             const maxX = this.pos.x + engine.drawWidth / 2 - 100;
         });
+    }
+    onPreUpdate(engine, delta) {
+        const runner = engine.getRunner && engine.getRunner();
+        if (runner && !runner.isKilled && !runner.isKilled()) {
+            // Gebruik altijd engine.speed, NIET een eigen this.speed!
+            this.pos.x -= engine.speed * (delta / 1000);
+        }
     }
 }

@@ -28,7 +28,7 @@ export class Runner extends Actor {
 
     onPreUpdate(engine, delta) {
         if (engine.input.keyboard.wasPressed(Keys.W) && this.isOnGround) {
-            this.body.applyLinearImpulse(new Vector(0, -350 * delta));
+            this.body.applyLinearImpulse(new Vector(0, -370 * delta));
             this.isOnGround = false;
         }
 

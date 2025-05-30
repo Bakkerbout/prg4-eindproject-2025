@@ -17,6 +17,10 @@ export class Hurdle extends Actor {
         this.on('collisionstart', (event) => this.hitSomething(event));
     }
 
+    onPreUpdate(engine, delta) {
+        this.vel.x = -engine.speed;
+    }
+
     hitSomething(event) {
         if (event.other.owner instanceof Runner) {
             const runner = event.other.owner;

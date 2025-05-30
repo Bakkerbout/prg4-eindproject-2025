@@ -12,10 +12,13 @@ export class Bal extends Actor {
     onInitialize(engine) {
         this.graphics.use(Resources.Bal.toSprite());
         this.body.collisionType = CollisionType.Active;
-        this.scale = new Vector(0.3, 0.3);
         this.body.useGravity = false;
 
         this.on('collisionstart', (event) => this.hitSomething(event));
+    }
+
+    onPreUpdate(engine, delta) {
+        this.vel.x = -engine.speed;
     }
 
     hitSomething(event) {
