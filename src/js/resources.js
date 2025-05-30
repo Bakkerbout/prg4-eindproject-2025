@@ -4,6 +4,7 @@ const Resources = {
     Runner: new ImageSource('images/runner.png'),
     Hurdle: new ImageSource('images/hurdle.png'),
     Heart: new ImageSource('images/heart.png'),
+    Bal: new ImageSource('images/bal.png'),
     Background: new ImageSource('images/background.png')
 }
 

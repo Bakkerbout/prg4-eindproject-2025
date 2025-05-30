@@ -17,10 +17,23 @@ export class UI extends ScreenElement {
 
         });
         this.addChild(this.livesLabel);
+
+        const highscore = localStorage.getItem("highscore") || 0;
+        this.highscoreLabel = new Label({
+            text: `Highscore: ${highscore}`,
+            pos: new Vector(0, 80),
+            font: new Font({ size: 32, color: Color.Black })
+        });
+        this.addChild(this.highscoreLabel);
     }
 
     updateScore(score) {
         this.scoreLabel.text = `Score: ${score}`;
+        const highscore = Number(localStorage.getItem("highscore")) || 0;
+        if (score > highscore) {
+            localStorage.setItem("highscore", score);
+            this.highscoreLabel.text = `Highscore: ${score}`;
+        }
     }
 
     updateLives(lives) {
